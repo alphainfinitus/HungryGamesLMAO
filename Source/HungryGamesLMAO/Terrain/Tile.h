@@ -19,12 +19,16 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn);
+	void PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn = 1, int MaxSpawn = 1, float Radius = 500);
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 private:
-	bool CastSphere(FVector Location, float Radius);
+	bool CanSpawnAtLocation(FVector Location, float Radius);
+
+	bool FindEmptyLocation(float Radius, FVector& OUTLocation);
+
+	void PlaceActor(TSubclassOf<AActor> ToSpawn, FVector SpawnPoint);
 };
